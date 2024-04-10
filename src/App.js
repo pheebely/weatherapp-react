@@ -4,10 +4,14 @@ import Weather from "./Weather";
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>Simple Weather ☀️</h1>
-        <Weather city="Prague" />
-      </header>
+      <h1>Simple Weather ☀️</h1>
+      <body>
+        <Weather name={""} temperature={""} />
+      </body>
+      <footer>
+        <a href="https://github.com/pheebely/weatherapp-react">GitHub Code</a>{" "}
+        by Phoebe Ly for SheCodes
+      </footer>
     </div>
   );
 }
