@@ -45,7 +45,10 @@ export default function Weather() {
           <li>Humidity: {Math.round(weather.humidity)}%</li>
           <li>Wind: {Math.round(weather.wind)}km/h</li>
           <li>
-            <img src={`http://openweathermap.org/img/w/${weather.icon}.png`} />
+            <img
+              src={`http://openweathermap.org/img/w/${weather.icon}.png`}
+              alt="weather icon"
+            />
           </li>
         </ul>
       </div>
