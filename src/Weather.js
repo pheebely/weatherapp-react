@@ -58,14 +58,14 @@ export default function Weather(props) {
           <p>Feels like {Math.round(weather.feelslike)}</p>
         </div>
         <div className="row gx-5 m-2" id="current-forecast-container">
-          <div className="col col-sm-4 p-3" id="current-temp-details">
+          <div className="col-sm-4 p-3" id="current-temp-details">
             <h3>{weather.description}</h3>
             <ul>
               <li>Humidity: {Math.round(weather.humidity)}%</li>
               <li>Wind: {Math.round(weather.wind)}km/h</li>
             </ul>
           </div>
-          <div className="col col-sm-8 p-3" id="current-forecast">
+          <div className="col-sm-8 p-3" id="current-forecast">
             <div className="row">
               <div className="col">
                 <img
