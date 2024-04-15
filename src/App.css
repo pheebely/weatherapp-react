@@ -6,9 +6,21 @@
 
 .App footer {
   font-size: 11px;
-  margin: 10px;
+  margin: 0 10px;
 }
 
 .App h1 {
   color: #c44601;
+  margin: 0 10px;
+
+}
+
+body {
+  background: #fcf9f6;
+  font-family: "Quicksand", sans-serif; 
+  margin: 2%;
+}
+
+a {
+  color: #f57600;
 }
