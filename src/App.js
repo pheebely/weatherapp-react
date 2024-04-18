@@ -1,5 +1,4 @@
 import "./App.css";
-import Map from "./Map";
 import Weather from "./Weather";
 
 function App() {

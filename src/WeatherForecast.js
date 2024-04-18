@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Weather.css";
+import WeatherIcon from "./WeatherIcon";
 
 export default function WeatherForecast(props) {
   let [loaded, setLoaded] = useState(false);
   let [forecast, setForecast] = useState(null);
+  let [icon, setIcon] = useState(null);
 
   useEffect(() => {
     setLoaded(false);
@@ -13,6 +15,7 @@ export default function WeatherForecast(props) {
   function handleResponse(response) {
     console.log(response);
     setForecast(response.data.daily);
+    setIcon(response.data.current.weather[0].icon);
     setLoaded(true);
   }
 
@@ -33,10 +36,7 @@ export default function WeatherForecast(props) {
             <div className="col">
               <p>
                 Monday
-                <img
-                  src={`http://openweathermap.org/img/wn/${forecast.icon}@2x.png`}
-                  alt="weather icon"
-                />
+                <WeatherIcon iconData={icon} />
                 <div className="row mx-2 justify-content-center">
                   <div className="col p-0 tempExtreme" id="temp-high">
                     18°C
