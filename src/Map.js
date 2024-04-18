@@ -1,18 +1,26 @@
 import React, { useRef, useEffect, useState } from "react";
-import mapboxgl from "!mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
+import mapboxgl from "mapbox-gl";
+import { type } from "@testing-library/user-event/dist/type";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoicGhlZWJlbHkiLCJhIjoiY2s2aGZoZTR4MDJsdTNlcXI2NnI1bXhuaiJ9.l0hhT8MPnRuT8LuyPP8Ovw";
 
-export default function App() {
+export default function App(props) {
   const mapContainer = useRef(null);
   const map = useRef(null);
-  const [lng, setLng] = useState(2.35);
-  const [lat, setLat] = useState(48.85);
+  const [loaded, setLoaded] = useState(false);
+  const [lng, setLng] = useState(props.coordinates.lon);
+  const [lat, setLat] = useState(props.coordinates.lat);
   const [zoom, setZoom] = useState(9);
+  const apiKey = "5b2c8972a4cffca524e4b2ca8fbed7f0";
 
   useEffect(() => {
-    if (map.current) return; // initialize map only once
+    setLoaded(false);
+    if (map.current) {
+      map.current.setCenter([lng, lat]);
+      return;
+    }
+
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
       style: "mapbox://styles/mapbox/streets-v12",
@@ -20,12 +28,36 @@ export default function App() {
       zoom: zoom,
     });
 
+    map.current.on("load", () => {
+      setLoaded(true);
+      map.current.addSource("precipitation", {
+        type: "raster",
+        tiles: [
+          "http://tile.openweathermap.org/maps/weather/PA0/{z}/{x}/{y}.png?appid=" +
+            apiKey,
+        ],
+        tileSize: 256,
+      });
+
+      map.current.addLayer({
+        id: "precip",
+        type: "raster",
+        source: "precipitation",
+        paint: {
+          "raster-opacity": 0.5,
+        },
+      });
+    });
+
     map.current.on("move", () => {
       setLng(map.current.getCenter().lng.toFixed(4));
       setLat(map.current.getCenter().lat.toFixed(4));
       setZoom(map.current.getZoom().toFixed(2));
     });
-  });
+  }, [props.coordinates, lng, lat]); // Include lng and lat in the dependency array
+  //useEffect will rerun whenever lng and lat change,
+  //ensuring that map.current.setCenter([lng, lat]) is called with
+  //the updated values from the useState hooks.
 
   return (
     <div>

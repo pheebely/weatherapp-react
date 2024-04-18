@@ -11,7 +11,7 @@
     text-transform: capitalize;  
     line-height: 1;
   }
-  
+
 .Weather li {
     list-style-type: none;
     line-height: 1.5;
@@ -60,6 +60,7 @@ padding-left: 0;
 
 .tempExtreme {
     color: #c44601;
+    line-height: 1.5;
 
 }
 
@@ -70,10 +71,9 @@ padding-left: 0;
     background-size: cover;
     background-blend-mode: darken;
     border-radius: 10px;
-    line-height: 1;
 }
 
-#current-temp-details {
+.current-forecast-col {
     background: white;
     border: 1px solid #c445012f;
     border-radius: 10px;
@@ -81,10 +81,8 @@ padding-left: 0;
 }
 
 #current-forecast {
-    background: white;
-    border: 1px solid #c445012f;
-    border-radius: 10px;
-    line-height: 2.5;
+    text-align: center;
+
 }
 
 #current-forecast img {

@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import axios from "axios";
+import "./Weather.css";
+import WeatherForecast from "./WeatherForecast";
+import Map from "./Map";
 
 export default function Weather(props) {
   let [weather, setWeather] = useState({ loaded: false });
   let [search, setSearch] = useState(props.defaultSearch);
 
   function getWeather(response) {
-    console.log(response);
     setWeather({
       loaded: true,
       city: response.data.name,
@@ -17,8 +19,7 @@ export default function Weather(props) {
       humidity: response.data.main.humidity,
       wind: response.data.wind.speed,
       icon: response.data.weather[0].icon,
-      long: response.data.coord.long,
-      lat: response.data.coord.lat,
+      coord: response.data.coord, //long, lat
     });
   }
 
@@ -52,76 +53,47 @@ export default function Weather(props) {
   );
 
   if (weather.loaded) {
+    console.log(weather.coord);
     return (
       <div className="Weather">
-        <div className="col-sm-4 m-2">{form}</div>
-        <div className="row m-2 p-4" id="current-temp">
+        <div className="col-sm-4 mx-2 my-3">{form}</div>
+        <div className="row mx-2 p-4" id="current-temp">
           <h2>{Math.round(weather.temperature)}°C</h2>
           <h3>{weather.city}</h3>
           <p>Feels like {Math.round(weather.feelslike)}°C</p>
         </div>
-        <div className="row gy-2 mx-2" id="current-forecast-container">
-          <div className="col-sm-4 p-4" id="current-temp-details">
-            <h3>{weather.description}</h3>
-            <ul>
-              <li>
-                <i class="fa-solid fa-droplet"></i> Humidity{" "}
-                <span id="details-style">{Math.round(weather.humidity)}%</span>
-              </li>
-              <li>
-                <i class="fa-solid fa-wind"></i> Wind{" "}
-                <span id="details-style">{Math.round(weather.wind)}km/h</span>
-              </li>
-              <li>
-                <i class="fa-solid fa-arrows-down-to-line"></i> Pressure{" "}
-                <span id="details-style">{Math.round(weather.wind)} hPa</span>
-              </li>
-            </ul>
-          </div>
-          <div className="col-sm ms-sm-2 p-3" id="current-forecast">
-            <div className="row justify-content-center">
-              <div className="col">
-                <p>
-                  Monday
-                  <img
-                    src={`http://openweathermap.org/img/w/${weather.icon}.png`}
-                    alt="weather icon"
-                  />
-                  <div className="row">
-                    <div className="col tempExtreme" id="temp-high">
-                      18°C
-                    </div>
-                    <div className="col tempExtreme" id="temp-low">
-                      10°C
-                    </div>
-                  </div>
-                </p>
-              </div>
-              <div className="col">
-                <img
-                  src={`http://openweathermap.org/img/w/${weather.icon}.png`}
-                  alt="weather icon"
-                />
-              </div>
-              <div className="col">
-                <img
-                  src={`http://openweathermap.org/img/w/${weather.icon}.png`}
-                  alt="weather icon"
-                />
-              </div>
-              <div className="col">
-                <img
-                  src={`http://openweathermap.org/img/w/${weather.icon}.png`}
-                  alt="weather icon"
-                />
-              </div>
-              <div className="col">
-                <img
-                  src={`http://openweathermap.org/img/w/${weather.icon}.png`}
-                  alt="weather icon"
-                />
+        <div className="container-fluid px-2 mb-3">
+          <div className="row mt-1 g-3" id="current-forecast-container">
+            <div className="col-sm-3">
+              <div
+                className="p-3 h-100 current-forecast-col"
+                id="current-temp-details"
+              >
+                <h3>{weather.description}</h3>
+                <ul>
+                  <li>
+                    <i class="fa-solid fa-droplet"></i> Humidity{" "}
+                    <span id="details-style">
+                      {Math.round(weather.humidity)}%
+                    </span>
+                  </li>
+                  <li>
+                    <i class="fa-solid fa-wind"></i> Wind{" "}
+                    <span id="details-style">
+                      {Math.round(weather.wind)}km/h
+                    </span>
+                  </li>
+                  <li>
+                    <i class="fa-solid fa-arrows-down-to-line"></i> Pressure{" "}
+                    <span id="details-style">
+                      {Math.round(weather.wind)} hPa
+                    </span>
+                  </li>
+                </ul>
               </div>
             </div>
+            <WeatherForecast coordinates={weather.coord} />
+            <Map coordinates={weather.coord} />
           </div>
         </div>
       </div>
