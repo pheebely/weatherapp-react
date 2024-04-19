@@ -4,6 +4,8 @@ import "./Weather.css";
 import WeatherForecastDay from "./WeatherForecastDay";
 
 export default function WeatherForecast(props) {
+  console.log(`Weather forecast received ${props.unit}`);
+
   let [loaded, setLoaded] = useState(false);
   let [forecast, setForecast] = useState(null);
 
@@ -35,7 +37,10 @@ export default function WeatherForecast(props) {
               if (index < 6) {
                 return (
                   <div className="col-4 col-sm py-2" key={index}>
-                    <WeatherForecastDay data={dailyForecast} />
+                    <WeatherForecastDay
+                      data={dailyForecast}
+                      unit={props.unit}
+                    />
                   </div>
                 );
               } else {

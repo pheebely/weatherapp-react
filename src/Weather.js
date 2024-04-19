@@ -8,6 +8,12 @@ import WeatherTemperature from "./WeatherTemperature";
 export default function Weather(props) {
   let [weather, setWeather] = useState({ loaded: false });
   let [search, setSearch] = useState(props.defaultSearch);
+  let [unit, setUnit] = useState("");
+
+  const handleUnitChange = (unit) => {
+    console.log(`Temperature unit changed to: ${unit}`);
+    setUnit(unit); //unit sent from WeatherTemperature
+  };
 
   function getWeather(response) {
     setWeather({
@@ -61,6 +67,7 @@ export default function Weather(props) {
 
         <div className="row mx-2 p-4" id="current-temp">
           <WeatherTemperature
+            onUnitChange={handleUnitChange} //need to send this to WeatherForecastDay
             celsius={weather.temperature}
             city={weather.city}
             feelslike={weather.feelslike}
@@ -93,7 +100,7 @@ export default function Weather(props) {
             className="row mt-1 g-3 justify-content-center"
             id="current-forecast-container"
           >
-            <WeatherForecast coordinates={weather.coord} />
+            <WeatherForecast coordinates={weather.coord} unit={unit} />
             <Map coordinates={weather.coord} />
           </div>
         </div>

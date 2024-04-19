@@ -6,11 +6,13 @@ export default function WeatherTemperature(props) {
   function convertToFahrenheit(event) {
     event.preventDefault();
     setUnit("fahrenheit");
+    props.onUnitChange("fahrenheit");
   }
 
   function convertToCelsius(event) {
     event.preventDefault();
     setUnit("celsius");
+    props.onUnitChange("celsius");
   }
 
   if (unit === "celsius") {
