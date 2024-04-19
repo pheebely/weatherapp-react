@@ -36,7 +36,8 @@ padding-left: 0;
 }
 
 .Weather .large {
-    font-size: 94px;
+    font-size: 85px;
+    font-weight: 600;
 }
 .search-input {
     width: 85%;

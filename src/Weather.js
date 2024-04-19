@@ -71,6 +71,7 @@ export default function Weather(props) {
             celsius={weather.temperature}
             city={weather.city}
             feelslike={weather.feelslike}
+            icon={weather.icon}
           />
           <div className="col-sm-4 my-3">
             <div className="p-3 current-forecast-col" id="current-temp-details">
