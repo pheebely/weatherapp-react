@@ -10,8 +10,8 @@ export default function Map(props) {
   const [loaded, setLoaded] = useState(false);
   const [lng, setLng] = useState(props.coordinates.lon);
   const [lat, setLat] = useState(props.coordinates.lat);
-  const [zoom, setZoom] = useState(7);
-  const apiKey = "5b2c8972a4cffca524e4b2ca8fbed7f0";
+  const [zoom, setZoom] = useState(6);
+  const apiKey = "73a00877081bd43422bdee0f3022beb5";
 
   useEffect(() => {
     setLoaded(false); // Reset loaded state when coordinates change
