@@ -53,45 +53,42 @@ export default function Weather(props) {
   );
 
   if (weather.loaded) {
-    console.log(weather.coord);
     return (
       <div className="Weather">
+        <div className="row"></div>
         <div className="col-sm-4 mx-2 my-3">{form}</div>
+
         <div className="row mx-2 p-4" id="current-temp">
-          <h2>{Math.round(weather.temperature)}°C</h2>
-          <h3>{weather.city}</h3>
-          <p>Feels like {Math.round(weather.feelslike)}°C</p>
+          <div className="col">
+            <h2>{Math.round(weather.temperature)}°C</h2>
+            <h3>{weather.city}</h3>
+            <p>Feels like {Math.round(weather.feelslike)}°C</p>
+          </div>
+          <div className="col-sm-4 my-3">
+            <div className="p-3 current-forecast-col" id="current-temp-details">
+              <h3>{weather.description}</h3>
+              <ul>
+                <li>
+                  <i class="fa-solid fa-droplet"></i> Humidity{" "}
+                  <span id="details-style">
+                    {Math.round(weather.humidity)}%
+                  </span>
+                </li>
+                <li>
+                  <i class="fa-solid fa-wind"></i> Wind{" "}
+                  <span id="details-style">{Math.round(weather.wind)}km/h</span>
+                </li>
+                <li>
+                  <i class="fa-solid fa-arrows-down-to-line"></i> Pressure{" "}
+                  <span id="details-style">{Math.round(weather.wind)} hPa</span>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
+
         <div className="container-fluid px-2 mb-3">
           <div className="row mt-1 g-3" id="current-forecast-container">
-            <div className="col-sm-3">
-              <div
-                className="p-3 h-100 current-forecast-col"
-                id="current-temp-details"
-              >
-                <h3>{weather.description}</h3>
-                <ul>
-                  <li>
-                    <i class="fa-solid fa-droplet"></i> Humidity{" "}
-                    <span id="details-style">
-                      {Math.round(weather.humidity)}%
-                    </span>
-                  </li>
-                  <li>
-                    <i class="fa-solid fa-wind"></i> Wind{" "}
-                    <span id="details-style">
-                      {Math.round(weather.wind)}km/h
-                    </span>
-                  </li>
-                  <li>
-                    <i class="fa-solid fa-arrows-down-to-line"></i> Pressure{" "}
-                    <span id="details-style">
-                      {Math.round(weather.wind)} hPa
-                    </span>
-                  </li>
-                </ul>
-              </div>
-            </div>
             <WeatherForecast coordinates={weather.coord} />
             <Map coordinates={weather.coord} />
           </div>

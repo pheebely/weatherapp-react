@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Weather.css";
-import WeatherIcon from "./WeatherIcon";
+import WeatherForecastDay from "./WeatherForecastDay";
 
 export default function WeatherForecast(props) {
   let [loaded, setLoaded] = useState(false);
   let [forecast, setForecast] = useState(null);
-  let [icon, setIcon] = useState(null);
 
   useEffect(() => {
     setLoaded(false);
@@ -15,7 +14,6 @@ export default function WeatherForecast(props) {
   function handleResponse(response) {
     console.log(response);
     setForecast(response.data.daily);
-    setIcon(response.data.current.weather[0].icon);
     setLoaded(true);
   }
 
@@ -30,47 +28,20 @@ export default function WeatherForecast(props) {
 
   if (loaded) {
     return (
-      <div className="col-sm-9">
+      <div className="col-sm">
         <div className="p-3 h-100 current-forecast-col" id="current-forecast">
           <div className="row justify-content-center">
-            <div className="col">
-              <p>
-                Monday
-                <WeatherIcon iconData={icon} />
-                <div className="row mx-2 justify-content-center">
-                  <div className="col p-0 tempExtreme" id="temp-high">
-                    18°C
+            {forecast.map(function (dailyForecast, index) {
+              if (index < 5) {
+                return (
+                  <div className="col" key={index}>
+                    <WeatherForecastDay data={dailyForecast} />
                   </div>
-                  <div className="col p-0 tempExtreme" id="temp-low">
-                    10°C
-                  </div>
-                </div>
-              </p>
-            </div>
-            <div className="col">
-              <img
-                src={`http://openweathermap.org/img/w/${forecast.icon}.png`}
-                alt="weather icon"
-              />
-            </div>
-            <div className="col">
-              <img
-                src={`http://openweathermap.org/img/w/${forecast.icon}.png`}
-                alt="weather icon"
-              />
-            </div>
-            <div className="col">
-              <img
-                src={`http://openweathermap.org/img/w/${forecast.icon}.png`}
-                alt="weather icon"
-              />
-            </div>
-            <div className="col">
-              <img
-                src={`http://openweathermap.org/img/w/${forecast.icon}.png`}
-                alt="weather icon"
-              />
-            </div>
+                );
+              } else {
+                return null;
+              }
+            })}
           </div>
         </div>
       </div>

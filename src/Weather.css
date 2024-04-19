@@ -74,9 +74,13 @@ padding-left: 0;
 
 .current-forecast-col {
     background: white;
-    border: 1px solid #c445012f;
     border-radius: 10px;
 
+}
+
+#current-temp-details {
+    background: rgba(255, 255, 255, 0.50);
+    border: none;
 }
 
 #current-forecast {
