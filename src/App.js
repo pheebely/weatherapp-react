@@ -7,9 +7,16 @@ function App() {
       <div className="container">
         <h1>Simple Weather</h1>
         <Weather defaultSearch="Paris" />
-        <footer>
-          <a href="https://github.com/pheebely/weatherapp-react">GitHub Code</a>{" "}
-          by Phoebe Ly for SheCodes
+        <footer className="px-2 pb-5">
+          Coded by Phoebe Ly and is open sourced on
+          <a href="https://github.com/pheebely/weatherapp-react">
+            {" "}
+            GitHub
+          </a>{" "}
+          hosted on{" "}
+          <a href="https://soft-cranachan-a772ce.netlify.app/">Netlify</a>.{" "}
+          Forecast data from
+          <a href="https://openweathermap.org/api"> OpenWeather</a>.
         </footer>
       </div>
     </div>

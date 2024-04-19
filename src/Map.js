@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import mapboxgl from "mapbox-gl";
+import "./Map.css";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoicGhlZWJlbHkiLCJhIjoiY2x2NnAxOXNyMDA4czJpcnRueTZ4ZjBzMSJ9.fprS8AwIVovrJzr6mN52jQ";
@@ -70,7 +71,10 @@ export default function Map(props) {
   //the updated values from the useState hooks.
 
   return (
-    <div>
+    <div className="map">
+      <div className="p-3 map-legend">
+        <h3>Precipitation Map</h3>
+      </div>
       <div ref={mapContainer} className="map-container" />
     </div>
   );
