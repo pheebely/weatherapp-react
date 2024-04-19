@@ -33,6 +33,8 @@ export default function Map(props) {
       style: "mapbox://styles/pheebely/clgwfsrps009q01qy55zzdphw",
       center: [lng, lat],
       zoom: zoom,
+      maxZoom: 10,
+      minZoom: 2,
     });
 
     map.current.on("load", () => {
@@ -52,6 +54,8 @@ export default function Map(props) {
 
       // Add navigation control (the +/- zoom buttons)
       map.current.addControl(new mapboxgl.NavigationControl(), "top-right");
+
+      map.current.addControl(new mapboxgl.ScaleControl());
     });
   }, [props.coordinates, lng, lat, zoom]);
 
@@ -70,10 +74,35 @@ export default function Map(props) {
   //ensuring that map.current.setCenter([lng, lat]) is called with
   //the updated values from the useState hooks.
 
+  const precipColorStops = [
+    { precipmm: 0, color: "rgba(225, 200, 100, 0.1)" },
+    { precipmm: 0.1, color: "rgba(200, 150, 150, 0.1)" },
+    { precipmm: 0.2, color: "rgba(150, 150, 170, 0.1)" },
+    { precipmm: 0.5, color: "rgba(120, 120, 190, 0.1)" },
+    { precipmm: 1, color: "rgba(110, 110, 205, 0.3)" },
+    { precipmm: 10, color: "rgba(80,80, 225, 0.5)" },
+    { precipmm: 140, color: "rgba(20, 20, 255, 0.6)" },
+  ];
+  function createLegend() {
+    console.log(precipColorStops);
+    return precipColorStops.map(function (stop, index) {
+      return (
+        <div
+          className="col legend"
+          key={index}
+          style={{ backgroundColor: stop.color }}
+        >
+          <span>{stop.precipmm}</span>
+        </div>
+      );
+    });
+  }
+
   return (
     <div className="map">
-      <div className="p-3 map-legend">
-        <h3>Precipitation Map</h3>
+      <div className="p-3 row justify-content-center map-legend">
+        <h3>Precipitation Map (mm)</h3>
+        <div className="row align-items-center mx-3 pt-3">{createLegend()}</div>
       </div>
       <div ref={mapContainer} className="map-container" />
     </div>

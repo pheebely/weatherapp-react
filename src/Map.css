@@ -1,4 +1,11 @@
 
 .map h3 {
+    text-transform: none;
     margin: 0;
+}
+
+.map .legend {
+    padding: 5px;
+    text-align: center;
+    
 }
