@@ -23,6 +23,12 @@ body {
 
 a {
   color: #f57600;
+  text-decoration: none;
+}
+
+a:hover {
+  color:#316ebd;
+  font-weight: 600;
 }
 
 .map-container {

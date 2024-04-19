@@ -21,7 +21,23 @@
 padding-left: 0;
 }
 
+.Weather .small {
+    font-size: 20px;
+    font-weight: 600;
+}
 
+.Weather .units a {
+    color: gray;
+}
+
+.Weather .units {
+    font-weight: 400;
+
+}
+
+.Weather .large {
+    font-size: 94px;
+}
 .search-input {
     width: 95%;
     color: #c44601;

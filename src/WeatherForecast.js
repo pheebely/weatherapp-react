@@ -29,12 +29,12 @@ export default function WeatherForecast(props) {
   if (loaded) {
     return (
       <div className="col-sm">
-        <div className="p-3 h-100 current-forecast-col" id="current-forecast">
+        <div className="p-3 current-forecast-col" id="current-forecast">
           <div className="row justify-content-center">
             {forecast.map(function (dailyForecast, index) {
-              if (index < 5) {
+              if (index < 6) {
                 return (
-                  <div className="col" key={index}>
+                  <div className="col-4 col-sm py-2" key={index}>
                     <WeatherForecastDay data={dailyForecast} />
                   </div>
                 );

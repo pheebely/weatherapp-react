@@ -3,6 +3,7 @@ import axios from "axios";
 import "./Weather.css";
 import WeatherForecast from "./WeatherForecast";
 import Map from "./Map";
+import WeatherTemperature from "./WeatherTemperature";
 
 export default function Weather(props) {
   let [weather, setWeather] = useState({ loaded: false });
@@ -59,11 +60,11 @@ export default function Weather(props) {
         <div className="col-sm-4 mx-2 my-3">{form}</div>
 
         <div className="row mx-2 p-4" id="current-temp">
-          <div className="col">
-            <h2>{Math.round(weather.temperature)}°C</h2>
-            <h3>{weather.city}</h3>
-            <p>Feels like {Math.round(weather.feelslike)}°C</p>
-          </div>
+          <WeatherTemperature
+            celsius={weather.temperature}
+            city={weather.city}
+            feelslike={weather.feelslike}
+          />
           <div className="col-sm-4 my-3">
             <div className="p-3 current-forecast-col" id="current-temp-details">
               <h3>{weather.description}</h3>
@@ -88,7 +89,10 @@ export default function Weather(props) {
         </div>
 
         <div className="container-fluid px-2 mb-3">
-          <div className="row mt-1 g-3" id="current-forecast-container">
+          <div
+            className="row mt-1 g-3 justify-content-center"
+            id="current-forecast-container"
+          >
             <WeatherForecast coordinates={weather.coord} />
             <Map coordinates={weather.coord} />
           </div>
