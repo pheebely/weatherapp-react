@@ -87,7 +87,6 @@ padding-left: 0;
 
 #current-temp {
     background: white;
-    background-image: url(/public/clear.jpg);
     background-size: cover;
     background-blend-mode: darken;
     border-radius: 10px;

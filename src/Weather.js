@@ -4,13 +4,19 @@ import "./Weather.css";
 import WeatherForecast from "./WeatherForecast";
 import Map from "./Map";
 import WeatherTemperature from "./WeatherTemperature";
+import cloudyImage from "./assets/cloudy.jpg";
+import clearImage from "./assets/clear.jpg";
+import clearNightImage from "./assets/clear_night.avif";
+import rainImage from "./assets/rain_cute.jpg";
+import thunderImage from "./assets/thunderstorm.jpg";
+import snowImage from "./assets/snow.jpeg";
 
 export default function Weather(props) {
   let [weather, setWeather] = useState({ loaded: false });
   let [search, setSearch] = useState(props.defaultSearch);
   let [unit, setUnit] = useState("celsius");
 
-  function getDate() {
+  function showDate() {
     const today = new Date();
     const month = today.getMonth() + 1;
     const date = today.getDate();
@@ -26,6 +32,13 @@ export default function Weather(props) {
 
     let minutes = today.getMinutes();
     let hours = today.getHours();
+
+    return { hours, minutes };
+  }
+
+  function showTime() {
+    let minutes = getTime().minutes;
+    let hours = getTime().hours;
 
     if (minutes < 10) {
       minutes = `0${minutes}`;
@@ -56,6 +69,41 @@ export default function Weather(props) {
       icon: response.data.weather[0].icon,
       coord: response.data.coord, //long, lat
     });
+  }
+
+  function setBackground() {
+    const description = `${weather.description}`;
+    const currentTime = getTime().hours;
+    console.log(
+      `The description and current time is ${description}, ${currentTime}`
+    );
+
+    if (
+      description.includes("clear") &&
+      (currentTime < 8 || currentTime > 17)
+    ) {
+      return { backgroundImage: `url(${clearImage})` };
+    }
+    if (
+      description.includes("clear") &&
+      (currentTime > 8 || currentTime < 17)
+    ) {
+      return { backgroundImage: `url(${clearNightImage})` };
+    }
+    if (description.includes("cloud") || description.includes("mist")) {
+      return { backgroundImage: `url(${cloudyImage})` };
+    }
+    if (description.includes("rain")) {
+      return { backgroundImage: `url(${rainImage})` };
+    }
+    if (description.includes("thunder")) {
+      return { backgroundImage: `url(${thunderImage})` };
+    }
+    if (description.includes("snow")) {
+      return { backgroundImage: `url(${snowImage})` };
+    } else {
+      return { backgroundImage: `url(${clearImage})` };
+    }
   }
 
   function handleSubmit(event) {
@@ -93,7 +141,7 @@ export default function Weather(props) {
         <div className="row"></div>
         <div className="col-sm-4 mx-2 my-3">{form}</div>
 
-        <div className="row mx-2 p-4" id="current-temp">
+        <div className="row mx-2 p-4" id="current-temp" style={setBackground()}>
           <WeatherTemperature
             onUnitChange={handleUnitChange} //need to send this to WeatherForecastDay
             celsius={weather.temperature}
@@ -104,9 +152,9 @@ export default function Weather(props) {
           <div className="col-sm-4 my-3">
             <div className="p-3 current-forecast-col" id="current-temp-details">
               <div className="row">
-                <div className="col text-left">{getDate()}</div>
+                <div className="col text-left">{showDate()}</div>
                 <div className="col d-flex flex-column align-items-end">
-                  {getTime()}
+                  {showTime()}
                 </div>
               </div>
               <hr></hr>

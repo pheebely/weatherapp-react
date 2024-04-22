@@ -4,7 +4,7 @@ import "./Weather.css";
 import WeatherForecastDay from "./WeatherForecastDay";
 
 export default function WeatherForecast(props) {
-  console.log(`Weather forecast received ${props.unit}`);
+  // console.log(`Weather forecast received ${props.unit}`);
 
   let [loaded, setLoaded] = useState(false);
   let [forecast, setForecast] = useState(null);
@@ -14,7 +14,6 @@ export default function WeatherForecast(props) {
   }, [props.coordinates]);
 
   function handleResponse(response) {
-    console.log(response);
     setForecast(response.data.daily);
     setLoaded(true);
   }

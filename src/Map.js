@@ -84,7 +84,7 @@ export default function Map(props) {
     { precipmm: 140, color: "rgba(20, 20, 255, 0.6)" },
   ];
   function createLegend() {
-    console.log(precipColorStops);
+    // console.log(precipColorStops);
     return precipColorStops.map(function (stop, index) {
       return (
         <div
