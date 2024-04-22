@@ -8,7 +8,7 @@ import WeatherTemperature from "./WeatherTemperature";
 export default function Weather(props) {
   let [weather, setWeather] = useState({ loaded: false });
   let [search, setSearch] = useState(props.defaultSearch);
-  let [unit, setUnit] = useState("");
+  let [unit, setUnit] = useState("celsius");
 
   const handleUnitChange = (unit) => {
     console.log(`Temperature unit changed to: ${unit}`);
