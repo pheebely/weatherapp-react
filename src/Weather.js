@@ -10,6 +10,34 @@ export default function Weather(props) {
   let [search, setSearch] = useState(props.defaultSearch);
   let [unit, setUnit] = useState("celsius");
 
+  function getDate() {
+    const today = new Date();
+    const month = today.getMonth() + 1;
+    const date = today.getDate();
+    const day = today.getDay();
+
+    let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+    return `${days[day]}, ${date}/${month}`;
+  }
+
+  function getTime() {
+    const today = new Date();
+
+    let minutes = today.getMinutes();
+    let hours = today.getHours();
+
+    if (minutes < 10) {
+      minutes = `0${minutes}`;
+    }
+
+    if (hours < 10) {
+      hours = `0${hours}`;
+    }
+
+    return `${hours}:${minutes}`;
+  }
+
   const handleUnitChange = (unit) => {
     console.log(`Temperature unit changed to: ${unit}`);
     setUnit(unit); //unit sent from WeatherTemperature
@@ -75,6 +103,13 @@ export default function Weather(props) {
           />
           <div className="col-sm-4 my-3">
             <div className="p-3 current-forecast-col" id="current-temp-details">
+              <div className="row">
+                <div className="col text-left">{getDate()}</div>
+                <div className="col d-flex flex-column align-items-end">
+                  {getTime()}
+                </div>
+              </div>
+              <hr></hr>
               <h3>{weather.description}</h3>
               <ul>
                 <li>

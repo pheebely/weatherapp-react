@@ -39,6 +39,10 @@ padding-left: 0;
     font-size: 85px;
     font-weight: 600;
 }
+
+.Weather hr {
+    opacity: 0.1;
+}
 .search-input {
     width: 85%;
     color: #c44601;
