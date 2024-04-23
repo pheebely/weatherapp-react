@@ -23,18 +23,6 @@ export default function Weather(props) {
   //   setTime(dateNew); //date sent from WeatherForecastDay
   // };
 
-  function getTimestamp() {
-    const today = new Date();
-    const timestamp = weather.date * 1000;
-    const timezoneOffset = weather.timezone * 1000;
-    const timestampLocal = timestamp + timezoneOffset - 7200000; //not sure wby the conversion adds 2 hrs so subtracting
-    setTimeLocal(new Date(timestampLocal));
-    console.log("System date:", today);
-    console.log("Unix Timestamp:", new Date(timestamp));
-    console.log("Timezone Offset (hours):", timezoneOffset / 3600000);
-    console.log("Local Timestamp (ms):", new Date(timeLocal));
-  }
-
   function showDate() {
     const today = timeLocal;
     const month = today.getMonth() + 1;
@@ -92,10 +80,21 @@ export default function Weather(props) {
   }
 
   useEffect(() => {
+    function getTimestamp() {
+      const today = new Date();
+      const timestamp = weather.date * 1000;
+      const timezoneOffset = weather.timezone * 1000;
+      const timestampLocal = timestamp + timezoneOffset - 7200000; //not sure wby the conversion adds 2 hrs so subtracting
+      setTimeLocal(new Date(timestampLocal));
+      console.log("System date:", today);
+      console.log("Unix Timestamp:", new Date(timestamp));
+      console.log("Timezone Offset (hours):", timezoneOffset / 3600000);
+      console.log("Local Timestamp (ms):", new Date(timeLocal));
+    }
     if (weather.loaded) {
       getTimestamp();
     }
-  }, [weather]);
+  }, [weather, timeLocal]);
 
   function setBackground() {
     const description = `${weather.description}`;
