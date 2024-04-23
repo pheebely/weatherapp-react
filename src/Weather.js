@@ -5,34 +5,52 @@ import WeatherForecast from "./WeatherForecast";
 import Map from "./Map";
 import WeatherTemperature from "./WeatherTemperature";
 import cloudyImage from "./assets/cloudy.jpg";
+import cloudyNightImage from "./assets/cloudy_night.jpeg";
 import clearImage from "./assets/clear.jpg";
 import clearNightImage from "./assets/clear_night.avif";
 import rainImage from "./assets/rain_cute.jpg";
 import thunderImage from "./assets/thunderstorm.jpg";
 import snowImage from "./assets/snow.jpeg";
+import { color } from "d3";
 
 export default function Weather(props) {
   let [weather, setWeather] = useState({ loaded: false });
   let [search, setSearch] = useState(props.defaultSearch);
   let [unit, setUnit] = useState("celsius");
+  let [time, setTime] = useState(null); //set default time to current time
+
+  const handleTimeChange = (dateNew) => {
+    console.log("Received the forecast city date:", dateNew);
+    setTime(dateNew); //date sent from WeatherForecastDay
+  };
 
   function showDate() {
-    const today = new Date();
+    let today = null;
+    if (time !== null) {
+      today = new Date(time);
+    } else {
+      today = new Date();
+    }
+
     const month = today.getMonth() + 1;
     const date = today.getDate();
     const day = today.getDay();
 
-    let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
     return `${days[day]}, ${date}/${month}`;
   }
 
   function getTime() {
-    const today = new Date();
+    let today = null;
+    if (time !== null) {
+      today = new Date(time);
+    } else {
+      today = new Date();
+    }
 
-    let minutes = today.getMinutes();
-    let hours = today.getHours();
-
+    const minutes = today.getMinutes(); // Change 'time' to 'today'
+    const hours = today.getHours(); // Change 'time' to 'today'
     return { hours, minutes };
   }
 
@@ -57,6 +75,7 @@ export default function Weather(props) {
   };
 
   function getWeather(response) {
+    console.log(response);
     setWeather({
       loaded: true,
       city: response.data.name,
@@ -68,6 +87,7 @@ export default function Weather(props) {
       wind: response.data.wind.speed,
       icon: response.data.weather[0].icon,
       coord: response.data.coord, //long, lat
+      date: response.data.dt,
     });
   }
 
@@ -80,24 +100,33 @@ export default function Weather(props) {
 
     if (
       description.includes("clear") &&
-      (currentTime < 8 || currentTime > 17)
+      (currentTime < 7 || currentTime > 19)
+    ) {
+      return { backgroundImage: `url(${clearNightImage})`, color: "#fff" };
+    }
+    if (
+      description.includes("clear") &&
+      (currentTime >= 7 || currentTime < 19)
     ) {
       return { backgroundImage: `url(${clearImage})` };
     }
     if (
-      description.includes("clear") &&
-      (currentTime > 8 || currentTime < 17)
+      (description.includes("cloud") || description.includes("mist")) &&
+      (currentTime < 7 || currentTime > 19)
     ) {
-      return { backgroundImage: `url(${clearNightImage})` };
+      return { backgroundImage: `url(${cloudyNightImage})`, color: "#fff" };
     }
-    if (description.includes("cloud") || description.includes("mist")) {
+    if (
+      (description.includes("cloud") || description.includes("mist")) &&
+      (currentTime >= 7 || currentTime < 19)
+    ) {
       return { backgroundImage: `url(${cloudyImage})` };
     }
     if (description.includes("rain")) {
       return { backgroundImage: `url(${rainImage})` };
     }
     if (description.includes("thunder")) {
-      return { backgroundImage: `url(${thunderImage})` };
+      return { backgroundImage: `url(${thunderImage})`, color: "#fff" };
     }
     if (description.includes("snow")) {
       return { backgroundImage: `url(${snowImage})` };
@@ -106,9 +135,18 @@ export default function Weather(props) {
     }
   }
 
+  function setDark() {
+    const currentTime = getTime().hours;
+    if (currentTime < 7 || currentTime > 19) {
+      return { background: "#0000009d", color: "#fff" };
+    }
+  }
+
   function handleSubmit(event) {
     event.preventDefault();
     apiSearch();
+    getTime();
+    //function to change time
   }
 
   function updateSearch(event) {
@@ -136,6 +174,7 @@ export default function Weather(props) {
   );
 
   if (weather.loaded) {
+    console.log("Weather data: ", weather.date);
     return (
       <div className="Weather">
         <div className="row"></div>
@@ -150,7 +189,11 @@ export default function Weather(props) {
             icon={weather.icon}
           />
           <div className="col-sm-4 my-3">
-            <div className="p-3 current-forecast-col" id="current-temp-details">
+            <div
+              className="p-3 current-forecast-col"
+              id="current-temp-details"
+              style={setDark()}
+            >
               <div className="row">
                 <div className="col text-left">{showDate()}</div>
                 <div className="col d-flex flex-column align-items-end">
@@ -184,7 +227,11 @@ export default function Weather(props) {
             className="row mt-1 g-3 justify-content-center"
             id="current-forecast-container"
           >
-            <WeatherForecast coordinates={weather.coord} unit={unit} />
+            <WeatherForecast
+              coordinates={weather.coord}
+              unit={unit}
+              onTimeChange={handleTimeChange}
+            />
             <Map coordinates={weather.coord} />
           </div>
         </div>
