@@ -8,36 +8,37 @@ export default function WeatherForecast(props) {
 
   let [loaded, setLoaded] = useState(false);
   let [forecast, setForecast] = useState(null);
-  let [time, setTime] = useState(null);
+  // let [time, setTime] = useState(null);
 
   useEffect(() => {
     setLoaded(false);
   }, [props.coordinates]);
 
-  function getDate(response) {
-    const today = new Date();
-    const timestamp = response.data.current.dt * 1000; //convert to millisecons
-    const timezoneOffset = response.data.timezone_offset * 1000; //convert to milliseconds
-    const timestampLocal = timestamp + timezoneOffset;
+  // function getDate(response) {
+  //   const today = new Date();
+  //   const timestamp = response.data.current.dt * 1000; //convert to millisecons
+  //   const timezoneOffset = response.data.timezone_offset * 1000; //convert to milliseconds
+  //   const timestampLocal = timestamp + timezoneOffset;
 
-    console.log("System date:", today);
-    console.log("Unix Timestamp:", timestamp);
-    console.log("Timezone Offset (ms):", timezoneOffset);
-    console.log("Local Timestamp (ms):", timestampLocal);
+  //   console.log("System date:", today);
+  //   console.log("Unix Timestamp:", timestamp);
+  //   console.log("Timezone Offset (ms):", timezoneOffset);
+  //   console.log("Local Timestamp (ms):", timestampLocal);
 
-    let localTime = new Date(timestampLocal);
+  //   let localTime = new Date(timestampLocal);
 
-    console.log("Today is", localTime);
-    return localTime;
-  }
+  //   console.log("Today is", localTime);
+  //   return localTime;
+  // }
 
   function handleResponse(response) {
     setForecast(response.data.daily);
-    setTime(getDate(response)); // Set the time state
     setLoaded(true);
-    props.onTimeChange(time); // Pass the time to the parent component
     console.log(response.data);
-    console.log("The time in forecast city is", time);
+
+    // setTime(getDate(response)); // Set the time state
+    // props.onTimeChange(time); // Pass the time to the parent component
+    // console.log("The time in forecast city is", time);
   }
 
   function load() {

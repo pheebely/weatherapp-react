@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Weather.css";
 import WeatherForecast from "./WeatherForecast";
@@ -16,21 +16,27 @@ export default function Weather(props) {
   let [weather, setWeather] = useState({ loaded: false });
   let [search, setSearch] = useState(props.defaultSearch);
   let [unit, setUnit] = useState("celsius");
-  let [time, setTime] = useState(null); //set default time to current time
+  let [timeLocal, setTimeLocal] = useState(new Date()); //set default time to current time
 
-  const handleTimeChange = (dateNew) => {
-    console.log("Received the forecast city date:", dateNew);
-    setTime(dateNew); //date sent from WeatherForecastDay
-  };
+  // const handleTimeChange = (dateNew) => {
+  //   console.log("Received the forecast city date:", dateNew);
+  //   setTime(dateNew); //date sent from WeatherForecastDay
+  // };
+
+  function getTimestamp() {
+    const today = new Date();
+    const timestamp = weather.date * 1000;
+    const timezoneOffset = weather.timezone * 1000;
+    const timestampLocal = timestamp + timezoneOffset - 7200000; //not sure wby the conversion adds 2 hrs so subtracting
+    setTimeLocal(new Date(timestampLocal));
+    console.log("System date:", today);
+    console.log("Unix Timestamp:", new Date(timestamp));
+    console.log("Timezone Offset (hours):", timezoneOffset / 3600000);
+    console.log("Local Timestamp (ms):", new Date(timeLocal));
+  }
 
   function showDate() {
-    let today = null;
-    if (time !== null) {
-      today = new Date(time);
-    } else {
-      today = new Date();
-    }
-
+    const today = timeLocal;
     const month = today.getMonth() + 1;
     const date = today.getDate();
     const day = today.getDay();
@@ -41,15 +47,9 @@ export default function Weather(props) {
   }
 
   function getTime() {
-    let today = null;
-    if (time !== null) {
-      today = new Date(time);
-    } else {
-      today = new Date();
-    }
-
-    const minutes = today.getMinutes(); // Change 'time' to 'today'
-    const hours = today.getHours(); // Change 'time' to 'today'
+    const today = timeLocal;
+    const minutes = today.getMinutes();
+    const hours = today.getHours();
     return { hours, minutes };
   }
 
@@ -87,8 +87,15 @@ export default function Weather(props) {
       icon: response.data.weather[0].icon,
       coord: response.data.coord, //long, lat
       date: response.data.dt,
+      timezone: response.data.timezone,
     });
   }
+
+  useEffect(() => {
+    if (weather.loaded) {
+      getTimestamp();
+    }
+  }, [weather]);
 
   function setBackground() {
     const description = `${weather.description}`;
@@ -144,8 +151,6 @@ export default function Weather(props) {
   function handleSubmit(event) {
     event.preventDefault();
     apiSearch();
-    getTime();
-    //function to change time
   }
 
   function updateSearch(event) {
@@ -173,7 +178,8 @@ export default function Weather(props) {
   );
 
   if (weather.loaded) {
-    console.log("Weather data: ", weather.date);
+    const currentDate = new Date(weather.date * 1000);
+    console.log("Weather data date: ", currentDate);
     return (
       <div className="Weather">
         <div className="row"></div>
@@ -229,7 +235,7 @@ export default function Weather(props) {
             <WeatherForecast
               coordinates={weather.coord}
               unit={unit}
-              onTimeChange={handleTimeChange}
+              // onTimeChange={handleTimeChange}
             />
             <Map coordinates={weather.coord} />
           </div>
