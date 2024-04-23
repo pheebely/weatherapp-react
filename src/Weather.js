@@ -11,7 +11,6 @@ import clearNightImage from "./assets/clear_night.avif";
 import rainImage from "./assets/rain_cute.jpg";
 import thunderImage from "./assets/thunderstorm.jpg";
 import snowImage from "./assets/snow.jpeg";
-import { color } from "d3";
 
 export default function Weather(props) {
   let [weather, setWeather] = useState({ loaded: false });

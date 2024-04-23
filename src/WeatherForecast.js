@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Weather.css";
 import WeatherForecastDay from "./WeatherForecastDay";
-import { local } from "d3";
 
 export default function WeatherForecast(props) {
   // console.log(`Weather forecast received ${props.unit}`);
