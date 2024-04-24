@@ -5,10 +5,10 @@ import WeatherForecast from "./WeatherForecast";
 import Map from "./Map";
 import WeatherTemperature from "./WeatherTemperature";
 import cloudyImage from "./assets/cloudy.jpg";
-import cloudyNightImage from "./assets/cloudy_night.jpeg";
+import cloudyNightImage from "./assets/cloudy_night.jpg";
 import clearImage from "./assets/clear.jpg";
 import clearNightImage from "./assets/clear_night.avif";
-import rainImage from "./assets/rain_cute.jpg";
+import rainImage from "./assets/rain.jpg";
 import thunderImage from "./assets/thunderstorm.jpg";
 import snowImage from "./assets/snow.jpeg";
 
@@ -126,7 +126,7 @@ export default function Weather(props) {
       return { backgroundImage: `url(${cloudyImage})` };
     }
     if (description.includes("rain")) {
-      return { backgroundImage: `url(${rainImage})` };
+      return { backgroundImage: `url(${rainImage})`, color: "#fff" };
     }
     if (description.includes("thunder")) {
       return { backgroundImage: `url(${thunderImage})`, color: "#fff" };
