@@ -16,15 +16,10 @@ export default function Weather(props) {
   let [weather, setWeather] = useState({ loaded: false });
   let [search, setSearch] = useState(props.defaultSearch);
   let [unit, setUnit] = useState("celsius");
-  let [timeLocal, setTimeLocal] = useState(new Date()); //set default time to current time
-
-  // const handleTimeChange = (dateNew) => {
-  //   console.log("Received the forecast city date:", dateNew);
-  //   setTime(dateNew); //date sent from WeatherForecastDay
-  // };
+  let [timeLocal, setTimeLocal] = useState(null); //set default time to current time
 
   function showDate() {
-    const today = timeLocal;
+    const today = timeLocal || new Date(); // If timeLocal is null, use new Date() as default
     const month = today.getMonth() + 1;
     const date = today.getDate();
     const day = today.getDay();
@@ -35,9 +30,11 @@ export default function Weather(props) {
   }
 
   function getTime() {
-    const today = timeLocal;
+    const today = timeLocal || new Date(); // If timeLocal is null, use new Date() as default
+
     const minutes = today.getMinutes();
     const hours = today.getHours();
+
     return { hours, minutes };
   }
 
@@ -94,7 +91,8 @@ export default function Weather(props) {
     if (weather.loaded) {
       getTimestamp();
     }
-  }, [weather, timeLocal]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [weather]);
 
   function setBackground() {
     const description = `${weather.description}`;
@@ -157,7 +155,7 @@ export default function Weather(props) {
   }
 
   function apiSearch() {
-    let apiKey = "3bc520cc14bbdedfd7e45158f2ef0439";
+    let apiKey = "ed238469f9b5e9d801834270e65449bc";
     let url = `https://api.openweathermap.org/data/2.5/weather?q=${search}&appid=${apiKey}&units=metric`;
     axios.get(url).then(getWeather);
   }
