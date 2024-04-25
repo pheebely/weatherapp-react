@@ -126,7 +126,10 @@ export default function Weather(props) {
       return { backgroundImage: `url(${cloudyImage})` };
     }
     if (description.includes("rain")) {
-      return { backgroundImage: `url(${rainImage})`, color: "#fff" };
+      return {
+        backgroundImage: `url(${rainImage})`,
+        color: "#fff",
+      };
     }
     if (description.includes("thunder")) {
       return { backgroundImage: `url(${thunderImage})`, color: "#fff" };
@@ -140,7 +143,7 @@ export default function Weather(props) {
 
   function setDark() {
     const currentTime = getTime().hours;
-    if (currentTime < 7 || currentTime > 19) {
+    if (currentTime < 7 || currentTime >= 19) {
       return { background: "#0000009d", color: "#fff" };
     }
   }

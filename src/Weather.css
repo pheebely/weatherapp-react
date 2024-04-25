@@ -27,13 +27,9 @@ padding-left: 0;
 }
 
 .Weather .units a {
-    color: rgb(100, 96, 96);
+    color: rgb(116, 111, 111);
 }
 
-.Weather .units {
-    font-weight: 400;
-
-}
 
 .Weather .large {
     font-size: 85px;
