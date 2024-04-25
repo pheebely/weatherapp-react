@@ -3,12 +3,12 @@ import WeatherIcon from "./WeatherIcon";
 
 export default function WeatherForecastDay(props) {
   function day() {
-    let date = new Date(props.data.dt * 1000);
+    let date = new Date(props.data.dt * 1000); //get data from dailyForecast
     let day = date.getDay();
 
     let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-    return days[day];
+    return days[day]; //map the value from day to the same index in days
   }
 
   function maxTemperatureC() {

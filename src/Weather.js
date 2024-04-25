@@ -78,10 +78,10 @@ export default function Weather(props) {
 
   useEffect(() => {
     function getTimestamp() {
-      const today = new Date();
+      const today = new Date(); //show GMT +02:00
       const timestamp = weather.date * 1000;
       const timezoneOffset = weather.timezone * 1000;
-      const timestampLocal = timestamp + timezoneOffset - 7200000; //not sure wby the conversion adds 2 hrs so subtracting
+      const timestampLocal = timestamp + timezoneOffset - 7200000; // need to subtract 2 hrs since the timezoneOffset is from GMT/UTC 0
       setTimeLocal(new Date(timestampLocal));
       console.log("System date:", today);
       console.log("Unix Timestamp:", new Date(timestamp));
@@ -175,8 +175,6 @@ export default function Weather(props) {
   );
 
   if (weather.loaded) {
-    const currentDate = new Date(weather.date * 1000);
-    console.log("Weather data date: ", currentDate);
     return (
       <div className="Weather">
         <div className="row"></div>
