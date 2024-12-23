@@ -8,7 +8,7 @@ import cloudyImage from "./assets/cloudy.jpg";
 import cloudyNightImage from "./assets/cloudy_night.jpg";
 import clearImage from "./assets/clear.jpg";
 import clearNightImage from "./assets/clear_night.avif";
-import rainImage from "./assets/rain.jpg";
+import rainImage from "./assets/rain_blue.jpg";
 import thunderImage from "./assets/thunderstorm.jpg";
 import snowImage from "./assets/snow.jpeg";
 
@@ -128,7 +128,7 @@ export default function Weather(props) {
     if (description.includes("rain")) {
       return {
         backgroundImage: `url(${rainImage})`,
-        color: "#fff",
+        color: "#000",
       };
     }
     if (description.includes("thunder")) {
@@ -158,7 +158,7 @@ export default function Weather(props) {
   }
 
   function apiSearch() {
-    let apiKey = "ed238469f9b5e9d801834270e65449bc";
+    let apiKey = "cabdbda40038ba7d1165b953b1c7bd6c";
     let url = `https://api.openweathermap.org/data/2.5/weather?q=${search}&appid=${apiKey}&units=metric`;
     axios.get(url).then(getWeather);
   }

@@ -17,9 +17,10 @@ export default function WeatherTemperature(props) {
   }
 
   if (unit === "celsius") {
+    // console.log(props.icon);
     return (
       <div className="col">
-        <WeatherIcon iconData={props.icon} size={32} />
+        <WeatherIcon code={props.icon} size={32} />
         <h2 className="large">
           {Math.round(props.celsius)}
           <span className="small">
@@ -44,7 +45,7 @@ export default function WeatherTemperature(props) {
 
     return (
       <div className="col">
-        <WeatherIcon iconData={props.icon} size={32} />
+        <WeatherIcon code={props.icon} size={32} />
         <h2 className="large">
           {Math.round(fahrenheit)}
           <span className="small">

@@ -3,7 +3,7 @@ import WeatherIcon from "./WeatherIcon";
 
 export default function WeatherForecastDay(props) {
   function day() {
-    let date = new Date(props.data.dt * 1000); //get data from dailyForecast
+    let date = new Date(props.data.time * 1000); //get data from dailyForecast
     let day = date.getDay();
 
     let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -12,23 +12,23 @@ export default function WeatherForecastDay(props) {
   }
 
   function maxTemperatureC() {
-    let temperature = Math.round(props.data.temp.max);
+    let temperature = Math.round(props.data.temperature.maximum);
     return `${temperature}°`;
   }
 
   function minTemperatureC() {
-    let temperature = Math.round(props.data.temp.min);
+    let temperature = Math.round(props.data.temperature.minimum);
     return `${temperature}°`;
   }
 
   function maxTemperatureF() {
-    let fahrenheitMax = (props.data.temp.max * 9) / 5 + 32;
+    let fahrenheitMax = (props.data.temperature.maximum * 9) / 5 + 32;
     let temperature = Math.round(fahrenheitMax);
     return `${temperature}°`;
   }
 
   function minTemperatureF() {
-    let fahrenheitMin = (props.data.temp.min * 9) / 5 + 32;
+    let fahrenheitMin = (props.data.temperature.minimum * 9) / 5 + 32;
     let temperature = Math.round(fahrenheitMin);
     return `${temperature}°`;
   }
@@ -36,7 +36,7 @@ export default function WeatherForecastDay(props) {
   return (
     <div className="col">
       <div className="WeatherForecast-day p-2 pt-0">{day()}</div>
-      <WeatherIcon iconData={props.data.weather[0].icon} size={32} />
+      <WeatherIcon code={props.data.condition.icon} size={32} />
       <div className="row mx-2 justify-content-center">
         <div className="col p-0 tempExtreme" id="temp-high">
           {props.unit === "celsius" ? maxTemperatureC() : maxTemperatureF()}

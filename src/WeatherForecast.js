@@ -20,11 +20,10 @@ export default function WeatherForecast(props) {
   }
 
   function load() {
-    let apiKey = "ed238469f9b5e9d801834270e65449bc";
+    let apiKey = "07bo10f2070ddf37c70acdt3d11ba4d4";
     let longitude = props.coordinates.lon;
     let latitude = props.coordinates.lat;
-    let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
-
+    let apiUrl = `https://api.shecodes.io/weather/v1/forecast?lon=${longitude}&lat=${latitude}&key=${apiKey}&units=metric`;
     axios.get(apiUrl).then(handleResponse);
   }
 
